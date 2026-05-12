@@ -1,0 +1,42 @@
+<aside class="{{ forceVisible|default(false) ? 'block' : 'hidden md:block' }} w-[72px] shrink-0 border-r border-border-subtle bg-bg-deepest px-3 py-3">
+    <div class="flex h-full flex-col items-center gap-2">
+        <a
+            href="{{ path('app_dm_index') }}"
+            class="server-pill {{ app.request.attributes.get('_route') starts with 'app_dm_' ? 'server-pill-active' : '' }}"
+            data-controller="tooltip"
+            data-action="mouseenter->tooltip#show mouseleave->tooltip#hide"
+        >
+            <span class="server-indicator"></span>
+            DM
+            <span data-tooltip-target="content" class="pointer-events-none absolute left-14 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md bg-black px-2 py-1 text-xs opacity-0 transition">Messages directs</span>
+        </a>
+
+        <div class="my-1 h-0.5 w-8 rounded bg-border-subtle"></div>
+
+        {% for membership in app.user.serverMemberships %}
+            {% set guild = membership.server %}
+            {% set active = currentServer is defined and currentServer and currentServer.id == guild.id %}
+            <a
+                href="{{ path('app_server_show', { id: guild.id }) }}"
+                class="server-pill {{ active ? 'server-pill-active' : '' }}"
+                data-controller="tooltip"
+                data-action="mouseenter->tooltip#show mouseleave->tooltip#hide"
+            >
+                <span class="server-indicator"></span>
+                {{ guild.name|slice(0, 2)|upper }}
+                <span data-tooltip-target="content" class="pointer-events-none absolute left-14 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md bg-black px-2 py-1 text-xs opacity-0 transition">{{ guild.name }}</span>
+            </a>
+        {% endfor %}
+
+        <a
+            href="{{ path('app_server_new') }}"
+            class="mt-auto server-pill bg-success/20 text-success hover:bg-brand hover:text-white"
+            data-controller="tooltip"
+            data-action="mouseenter->tooltip#show mouseleave->tooltip#hide"
+        >
+            <span class="server-indicator"></span>
+            +
+            <span data-tooltip-target="content" class="pointer-events-none absolute left-14 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md bg-black px-2 py-1 text-xs opacity-0 transition">Créer un serveur</span>
+        </a>
+    </div>
+</aside>

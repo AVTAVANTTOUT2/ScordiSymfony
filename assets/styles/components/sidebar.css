@@ -1,0 +1,18 @@
+@layer components {
+    .server-pill {
+        @apply relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-bg-elevated text-sm font-semibold text-text-primary transition-all duration-200 ease-out hover:rounded-2xl hover:bg-brand;
+    }
+
+    .server-pill-active {
+        @apply rounded-2xl bg-brand;
+    }
+
+    .server-indicator {
+        @apply absolute -left-3 h-5 w-1 rounded-r bg-white opacity-0 transition-all duration-200;
+    }
+
+    .server-pill:hover .server-indicator,
+    .server-pill-active .server-indicator {
+        @apply h-10 opacity-100;
+    }
+}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <main class="mx-auto flex min-h-[calc(100vh-3rem)] max-w-md items-center px-4">
+        <section class="ui-card w-full p-6">
+            <h1 class="text-2xl font-bold text-text-primary">Bon retour</h1>
+            <p class="mt-1 text-sm text-text-muted">Connecte-toi pour rejoindre tes salons.</p>
+        {% if error %}
+            <p class="mt-4 rounded bg-danger/15 px-3 py-2 text-sm text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        {% endif %}
+        <form method="post" class="mt-5 space-y-4">
+            <div>
+                <label class="ui-label">Email</label>
+                <input class="ui-input" type="email" name="_username" value="{{ last_username }}" required>
+            </div>
+            <div>
+                <label class="ui-label">Mot de passe</label>
+                <input class="ui-input" type="password" name="_password" required>
+            </div>
+            <label class="inline-flex items-center gap-2 text-sm text-text-secondary">
+                <input type="checkbox" name="_remember_me" class="rounded border-border-default bg-bg-elevated">
+                Se souvenir de moi
+            </label>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="ui-btn-primary w-full justify-center">Se connecter</button>
+        </form>
+        <p class="mt-4 text-sm text-text-muted">Pas de compte ? <a href="{{ path('app_register') }}" class="text-text-link hover:underline">Inscription</a></p>
+        </section>
+    </main>
+{% endblock %}

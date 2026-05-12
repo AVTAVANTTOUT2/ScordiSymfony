@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>{% block title %}Discord Clone{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (() => {
+            const storedTheme = localStorage.getItem('discord_clone_theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (storedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+</head>
+<body
+    class="min-h-screen bg-[#f2f3f5] text-[#060607] dark:bg-bg-base dark:text-text-primary"
+    data-controller="presence"
+    data-presence-heartbeat-url-value="{{ path('app_api_presence_heartbeat') }}"
+>
+<header class="sticky top-0 z-40 flex h-12 items-center justify-between border-b border-border-subtle bg-bg-deepest px-4 text-text-primary">
+    <a href="{{ path('app_home') }}" class="text-sm font-semibold tracking-wide text-text-primary">DiscordClone</a>
+    <div class="flex items-center gap-2">
+        {% if app.user %}
+            <a href="{{ path('app_dm_index') }}" class="ui-icon-btn" aria-label="Messages directs">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </a>
+            <a href="{{ path('app_profile') }}" class="ui-icon-btn" aria-label="Profil">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+            </a>
+            <a href="{{ path('app_logout') }}" class="ui-icon-btn" aria-label="Déconnexion">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M12 19H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h7"/></svg>
+            </a>
+        {% endif %}
+        <button
+            class="ui-btn-secondary px-2 py-1 text-xs"
+            data-controller="theme"
+            data-action="click->theme#toggle"
+            data-theme-target="label"
+        >
+            Mode clair
+        </button>
+    </div>
+</header>
+
+<div class="pointer-events-none fixed bottom-4 right-4 z-50 flex w-80 max-w-[calc(100%-2rem)] flex-col gap-2">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            {% include '_partials/_toast.html.twig' with { type: label, message: message } %}
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<div class="min-h-[calc(100vh-3rem)]">
+    {% block body %}{% endblock %}
+</div>
+</body>
+</html>

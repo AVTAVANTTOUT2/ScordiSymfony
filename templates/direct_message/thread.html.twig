@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DM · {{ other.username }}{% endblock %}
+
+{% block body %}
+    <main class="flex min-h-[calc(100vh-3rem)]">
+        {% include '_partials/_server_sidebar.html.twig' with { currentServer: null } %}
+        <section class="flex min-w-0 flex-1 flex-col bg-bg-base">
+            <header class="flex h-12 items-center justify-between border-b border-border-subtle px-4">
+                <h1 class="text-base font-semibold text-text-primary">Conversation avec {{ other.username }}</h1>
+                <a href="{{ path('app_dm_index') }}" class="ui-btn-secondary px-3 py-1 text-xs">Retour</a>
+            </header>
+
+            <div class="flex-1 space-y-1 overflow-y-auto px-2 py-3">
+                {% for message in messages %}
+                    <article class="message-row">
+                        <div class="flex gap-3 py-1">
+                            {% include '_partials/_avatar.html.twig' with { user: message.author, size: 'w-8 h-8' } %}
+                            <div>
+                                <header class="text-xs text-text-muted">{{ message.author.username }} · {{ message.createdAt|date('H:i:s') }}</header>
+                                <p class="mt-1 text-sm text-text-secondary">{{ message.content }}</p>
+                            </div>
+                        </div>
+                    </article>
+                {% else %}
+                    {% include '_partials/_empty_state.html.twig' with {
+                        icon: '⌁',
+                        title: 'Aucun message',
+                        subtitle: 'Démarre la conversation avec ton premier message.'
+                    } %}
+                {% endfor %}
+            </div>
+
+            <form method="post" class="border-t border-border-subtle p-4" data-controller="autoresize">
+                <div class="rounded-lg bg-bg-elevated p-2">
+                    <textarea
+                        name="content"
+                        rows="1"
+                        class="max-h-48 w-full resize-none bg-transparent px-2 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none"
+                        placeholder="Écrire un message"
+                        data-autoresize-target="input"
+                        data-action="input->autoresize#onInput"
+                    ></textarea>
+                    <div class="mt-2 flex justify-end">
+                        <button class="ui-btn-primary px-3 py-2 text-xs" data-autoresize-target="submit">Envoyer</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+{% endblock %}

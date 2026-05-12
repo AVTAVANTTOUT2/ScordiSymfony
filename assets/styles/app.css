@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './animations.css';
+@import './components/messages.css';
+@import './components/sidebar.css';
+@import './components/modals.css';
+
+@layer base {
+    body {
+        @apply font-sans antialiased;
+    }
+
+    html:not(.dark) body {
+        @apply bg-[#f2f3f5] text-[#060607];
+    }
+
+    html.dark body {
+        @apply bg-bg-base text-text-primary;
+    }
+
+    * {
+        @apply border-border-subtle;
+    }
+}
+
+@layer components {
+    .ui-btn-primary {
+        @apply rounded-md bg-brand px-4 py-2 text-sm font-medium text-white transition-all duration-150 hover:scale-105 hover:bg-brand-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .ui-btn-secondary {
+        @apply rounded-md border border-border-default bg-transparent px-4 py-2 text-sm font-medium text-text-primary transition-all duration-150 hover:bg-bg-elevated active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .ui-btn-danger {
+        @apply rounded-md bg-danger px-4 py-2 text-sm font-medium text-white transition-all duration-150 hover:bg-danger/80 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .ui-icon-btn {
+        @apply flex h-9 w-9 items-center justify-center rounded text-text-secondary transition-all duration-150 hover:bg-bg-elevated hover:text-text-primary active:scale-95;
+    }
+
+    .ui-input {
+        @apply w-full rounded border-0 bg-bg-deepest px-3 py-2 text-base text-text-primary placeholder:text-text-muted transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-brand;
+    }
+
+    .ui-label {
+        @apply mb-1 block text-xs font-bold uppercase tracking-wide text-text-secondary;
+    }
+
+    .ui-card {
+        @apply rounded-lg border border-border-subtle bg-bg-base shadow-sm;
+    }
+}

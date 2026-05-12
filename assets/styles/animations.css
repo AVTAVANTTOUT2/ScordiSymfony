@@ -1,0 +1,13 @@
+@layer utilities {
+    .animate-message-in {
+        animation: message-in 150ms ease-out;
+    }
+
+    .animate-modal-in {
+        animation: modal-in 150ms ease-out;
+    }
+
+    .animate-slide-in-right {
+        animation: slide-in-right 180ms ease-out;
+    }
+}

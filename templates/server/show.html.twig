@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ server.name }}{% endblock %}
+
+{% block body %}
+    <main class="flex min-h-[calc(100vh-3rem)]">
+        {% include '_partials/_server_sidebar.html.twig' with { currentServer: server } %}
+        <section class="flex min-w-0 flex-1 items-center justify-center bg-bg-base p-6">
+            {% include '_partials/_empty_state.html.twig' with {
+                icon: '#',
+                title: 'Aucun salon texte',
+                subtitle: 'Crée un salon pour commencer à discuter sur ce serveur.'
+            } %}
+        </section>
+    </main>
+{% endblock %}

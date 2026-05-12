@@ -1,0 +1,13 @@
+{% set avatarSize = size|default('w-10 h-10') %}
+{% set borderClass = statusBorder|default('border-bg-base') %}
+{% set status = user.presenceStatus|default('offline') %}
+{% set statusClass = status == 'online'
+    ? 'bg-status-online animate-presence-pulse'
+    : (status == 'idle'
+        ? 'bg-status-idle'
+        : (status == 'dnd' ? 'bg-status-dnd' : 'bg-status-offline')) %}
+
+<div class="relative inline-flex {{ avatarSize }} items-center justify-center rounded-full bg-bg-elevated text-xs font-semibold text-text-primary">
+    {{ user.username|default('??')|slice(0, 2)|upper }}
+    <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 {{ borderClass }} {{ statusClass }}"></span>
+</div>

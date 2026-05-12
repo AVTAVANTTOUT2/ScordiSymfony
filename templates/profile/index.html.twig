@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <main class="flex min-h-[calc(100vh-3rem)]">
+        {% include '_partials/_server_sidebar.html.twig' with { currentServer: null } %}
+        <section class="mx-auto w-full max-w-3xl p-6">
+        <h1 class="text-2xl font-semibold text-text-primary">Profil</h1>
+        <p class="mt-1 text-text-muted">{{ user.email }}</p>
+
+        <form method="post" class="mt-6 space-y-4 ui-card p-4">
+            <div>
+                <label class="ui-label">Pseudo</label>
+                <input type="text" value="{{ user.username }}" disabled class="ui-input opacity-70">
+            </div>
+            <div>
+                <label class="ui-label">Bio</label>
+                <textarea name="bio" rows="4" class="ui-input">{{ user.bio }}</textarea>
+            </div>
+            <button type="submit" class="ui-btn-primary">Enregistrer</button>
+        </form>
+        </section>
+    </main>
+{% endblock %}

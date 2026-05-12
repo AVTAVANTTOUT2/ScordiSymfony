@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages directs{% endblock %}
+
+{% block body %}
+    <main class="flex min-h-[calc(100vh-3rem)]">
+        {% include '_partials/_server_sidebar.html.twig' with { currentServer: null } %}
+        <section class="flex min-w-0 flex-1 flex-col bg-bg-base p-6">
+        <h1 class="text-2xl font-semibold text-text-primary">Messages directs</h1>
+
+        <form method="get" class="mt-4 flex gap-2">
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Rechercher un utilisateur"
+                class="ui-input"
+            >
+            <button class="ui-btn-primary">Rechercher</button>
+        </form>
+
+        {% if query %}
+            <div class="mt-4 ui-card p-3">
+                <h2 class="mb-2 text-sm text-text-muted">Résultats</h2>
+                {% for result in results %}
+                    <form method="post" action="{{ path('app_dm_start', { id: result.id }) }}" class="mb-2 flex items-center justify-between rounded bg-bg-elevated px-3 py-2">
+                        <span>{{ result.username }}</span>
+                        <button class="ui-btn-primary px-3 py-1 text-xs">Démarrer</button>
+                    </form>
+                {% else %}
+                    {% include '_partials/_empty_state.html.twig' with {
+                        icon: '⌁',
+                        title: 'Aucun résultat',
+                        subtitle: 'Aucun utilisateur ne correspond à ta recherche.'
+                    } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="mt-6 ui-card p-3">
+            <h2 class="mb-2 text-sm text-text-muted">Conversations</h2>
+            {% for thread in threads %}
+                {% set other = thread.userA.id == app.user.id ? thread.userB : thread.userA %}
+                <a href="{{ path('app_dm_thread', { id: thread.id }) }}" class="mb-2 block rounded bg-bg-elevated px-3 py-2 text-sm transition hover:bg-bg-hover">
+                    {{ other.username }}
+                </a>
+            {% else %}
+                {% include '_partials/_empty_state.html.twig' with {
+                    icon: '⌁',
+                    title: 'Aucune conversation',
+                    subtitle: 'Recherche un utilisateur pour démarrer un message direct.'
+                } %}
+            {% endfor %}
+        </div>
+        </section>
+    </main>
+{% endblock %}

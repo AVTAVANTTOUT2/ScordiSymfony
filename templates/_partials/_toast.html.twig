@@ -1,0 +1,12 @@
+{% set borderColor = type == 'success'
+    ? 'border-success'
+    : (type == 'warning'
+        ? 'border-warning'
+        : (type == 'danger' or type == 'error' ? 'border-danger' : 'border-info')) %}
+
+<div
+    class="animate-slide-in-right pointer-events-auto rounded-md border-l-4 {{ borderColor }} bg-bg-elevated px-4 py-3 shadow-xl"
+    data-controller="toast"
+>
+    <p class="text-sm text-text-primary">{{ message }}</p>
+</div>

@@ -1,0 +1,29 @@
+<aside class="{{ forceVisible|default(false) ? 'flex' : 'hidden lg:flex' }} w-60 shrink-0 border-r border-border-subtle bg-bg-deep lg:flex-col">
+    <div class="flex h-12 items-center justify-between border-b border-border-subtle px-4 shadow-sm">
+        <h2 class="truncate text-sm font-semibold text-text-primary">{{ server.name }}</h2>
+        <button class="ui-icon-btn h-7 w-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/></svg>
+        </button>
+    </div>
+
+    <div class="flex-1 space-y-4 overflow-y-auto px-2 py-3">
+        <div>
+            <div class="mb-1 px-2 text-xs font-semibold uppercase tracking-wide text-text-muted">Salons texte</div>
+            {% for srvChannel in server.channels %}
+                {% if srvChannel.type == 'text' %}
+                    <a
+                        href="{{ path('app_channel_show', { server: server.id, channel: srvChannel.id }) }}"
+                        class="mb-0.5 flex items-center gap-2 rounded px-2 py-1.5 text-sm transition-all duration-150 {{ srvChannel.id == channel.id ? 'bg-bg-hover text-text-primary font-medium' : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary' }}"
+                    >
+                        <span class="text-text-muted">#</span>
+                        <span class="truncate">{{ srvChannel.name }}</span>
+                    </a>
+                {% endif %}
+            {% else %}
+                <div class="px-2 py-2 text-sm text-text-muted">Aucun salon.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include '_partials/_user_panel.html.twig' %}
+</aside>

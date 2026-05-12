@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <main class="flex min-h-[calc(100vh-3rem)]">
+        {% include '_partials/_server_sidebar.html.twig' with { currentServer: null } %}
+        <section class="flex min-w-0 flex-1 flex-col items-center justify-center bg-bg-base p-8">
+            {% if servers|length > 0 %}
+                {% include '_partials/_empty_state.html.twig' with {
+                    icon: '⌁',
+                    title: 'Sélectionne un serveur',
+                    subtitle: 'Choisis un serveur dans la colonne de gauche pour afficher ses salons et ses messages.'
+                } %}
+            {% else %}
+                {% include '_partials/_empty_state.html.twig' with {
+                    icon: '+',
+                    title: 'Aucun serveur pour le moment',
+                    subtitle: 'Crée ton premier serveur pour commencer.',
+                    ctaLabel: 'Créer un serveur',
+                    ctaHref: path('app_server_new')
+                } %}
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}

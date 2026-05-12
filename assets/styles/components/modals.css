@@ -1,0 +1,9 @@
+@layer components {
+    .modal-backdrop {
+        @apply fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm;
+    }
+
+    .modal-card {
+        @apply animate-modal-in w-full max-w-md rounded-lg border border-border-subtle bg-bg-base shadow-2xl;
+    }
+}

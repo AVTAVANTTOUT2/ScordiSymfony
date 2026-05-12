@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ server.name }} · #{{ channel.name }}{% endblock %}
+
+{% block body %}
+    <main class="flex min-h-[calc(100vh-3rem)]" data-controller="drawer">
+        <button
+            class="fixed inset-0 z-40 hidden bg-black/50 lg:hidden"
+            data-drawer-target="backdrop"
+            data-action="click->drawer#close"
+            type="button"
+        ></button>
+        <aside
+            class="fixed inset-y-0 left-0 z-50 flex w-[320px] -translate-x-full transform bg-bg-deepest transition-transform duration-150 lg:hidden"
+            data-drawer-target="panel"
+        >
+            {% include '_partials/_server_sidebar.html.twig' with { currentServer: server, forceVisible: true } %}
+            <div class="flex w-60 flex-col">
+                {% include '_partials/_channel_sidebar.html.twig' with { server: server, channel: channel, forceVisible: true } %}
+            </div>
+        </aside>
+
+        {% include '_partials/_server_sidebar.html.twig' with { currentServer: server } %}
+        {% include '_partials/_channel_sidebar.html.twig' with { server: server, channel: channel } %}
+
+        <section
+            class="flex min-w-0 flex-1 flex-col bg-bg-base"
+            data-controller="chat"
+            data-chat-poll-url-value="{{ path('app_api_channel_poll', { id: channel.id }) }}"
+            data-chat-history-url-value="{{ path('app_api_channel_history', { id: channel.id }) }}"
+            data-chat-post-url-value="{{ path('app_message_send', { server: server.id, channel: channel.id }) }}"
+        >
+            {% include '_partials/_channel_header.html.twig' with { channel: channel } %}
+
+            <div class="relative min-h-0 flex-1 overflow-hidden">
+                <button
+                    class="ui-btn-primary absolute bottom-4 left-1/2 z-10 hidden -translate-x-1/2 px-3 py-1 text-xs"
+                    data-chat-target="newBanner"
+                    data-action="click->chat#jumpToBottom"
+                ></button>
+
+                <div class="h-full space-y-0.5 overflow-y-auto px-2 py-3" data-chat-target="list">
+                    {% for message in messages %}
+                        {% include '_partials/_message.html.twig' with { message: message } %}
+                    {% else %}
+                        {% include '_partials/_empty_state.html.twig' with {
+                            icon: '⌁',
+                            title: 'Aucun message ici',
+                            subtitle: 'Sois le premier à dire bonjour dans ce salon.'
+                        } %}
+                    {% endfor %}
+                    <div data-chat-target="anchor"></div>
+                </div>
+            </div>
+
+            {% include '_partials/_message_input.html.twig' with { channel: channel } %}
+        </section>
+    </main>
+{% endblock %}

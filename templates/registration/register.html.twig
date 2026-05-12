@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <main class="mx-auto flex min-h-[calc(100vh-3rem)] max-w-md items-center px-4">
+        <section class="ui-card w-full p-6">
+        <h1 class="text-2xl font-bold text-text-primary">Créer un compte</h1>
+        {{ form_start(registrationForm, { attr: { class: 'mt-5 space-y-4' } }) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.rememberMe, { label: 'Se souvenir de moi' }) }}
+            <button type="submit" class="ui-btn-primary w-full">S’inscrire</button>
+        {{ form_end(registrationForm) }}
+        <p class="mt-4 text-sm text-text-muted">Déjà inscrit ? <a href="{{ path('app_login') }}" class="text-text-link hover:underline">Connexion</a></p>
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,25 @@
+<article class="message-row" data-message-id="{{ message.id }}">
+    <div class="flex gap-3 py-1">
+        {% include '_partials/_avatar.html.twig' with { user: message.author, size: 'w-10 h-10' } %}
+        <div class="min-w-0 flex-1">
+            <header class="mb-1 flex items-center gap-2 text-sm">
+                <span class="font-semibold text-text-primary">{{ message.author.username }}</span>
+                <time class="text-xs text-text-muted">{{ message.createdAt|date('H:i') }}</time>
+                {% if message.updatedAt %}
+                    <span class="text-xs text-text-muted">(modifié)</span>
+                {% endif %}
+            </header>
+            <div class="prose prose-invert max-w-none text-sm leading-relaxed text-text-secondary">
+                {{ message.content|nl2br }}
+            </div>
+        </div>
+    </div>
+    <div class="message-toolbar">
+        <button type="button" class="ui-icon-btn" aria-label="Réagir">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+        </button>
+        <button type="button" class="ui-icon-btn" aria-label="Répondre">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+        </button>
+    </div>
+</article>

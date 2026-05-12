@@ -1,0 +1,26 @@
+<form
+    class="border-t border-border-subtle bg-bg-base p-4"
+    data-chat-target="form"
+    data-controller="autoresize"
+    data-action="submit->chat#submit"
+>
+    <div class="rounded-lg bg-bg-elevated p-2">
+        <div class="flex items-end gap-2">
+            <button type="button" class="ui-icon-btn shrink-0" aria-label="Ajouter une pièce jointe">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+            <textarea
+                name="content"
+                rows="1"
+                class="max-h-48 w-full resize-none bg-transparent px-1 py-2 text-base text-text-primary placeholder:text-text-muted focus:outline-none"
+                placeholder="Envoyer un message dans #{{ channel.name }}"
+                data-chat-target="content"
+                data-autoresize-target="input"
+                data-action="input->autoresize#onInput"
+            ></textarea>
+            <button type="submit" class="ui-btn-primary shrink-0 px-3 py-2 text-xs" data-autoresize-target="submit">
+                Envoyer
+            </button>
+        </div>
+    </div>
+</form>
