@@ -81,3 +81,9 @@ Tu peux créer un VirtualHost pour une URL propre (`http://discord.local`) point
 
 Sinon le mode sous-dossier est déjà prêt avec `public/.htaccess`.
 
+## Journal des actions
+
+- 2026-05-12: Initialisation Git du projet local dans `/Applications/MAMP/htdocs/scordi`.
+- 2026-05-12: Création du dépôt GitHub public `ScordiSymfony`.
+- 2026-05-12: Push du projet vers `https://github.com/AVTAVANTTOUT2/ScordiSymfony`.
+- 2026-05-12: Ajout d’un `.gitignore` de base (`node_modules`, `vendor`, `var`, fichiers d’environnement et cache PHPUnit).
